@@ -45,12 +45,14 @@ define(['@docsvision/webclient/System/ExtensionManager', 'tslib', '@docsvision/w
         return { ok: true };
     }
     function collectCardInfo(layout) {
-        var _a, _b;
+        var _a, _b, _c;
         var title = (_a = getTextValue(layout, "cardName")) !== null && _a !== void 0 ? _a : "(без названия)";
         var created = getDateValue(layout, "cardDate");
         var reason = (_b = getTextValue(layout, "reasonBT")) !== null && _b !== void 0 ? _b : "(без основания)";
         var fromDate = getDateValue(layout, "dateStartBT");
         var toDate = getDateValue(layout, "dateFinishBT");
+        var cityDDR = layout.controls.get("city");
+        var city = (_c = cityDDR.value.name) !== null && _c !== void 0 ? _c : null;
         function parseDate(d) {
             if (!d)
                 return "(не указана)";
@@ -72,6 +74,7 @@ define(['@docsvision/webclient/System/ExtensionManager', 'tslib', '@docsvision/w
             created: parseDate(created),
             fromDate: parseDate(fromDate),
             toDate: parseDate(toDate),
+            city: city,
             reason: reason
         };
     }
@@ -131,6 +134,7 @@ define(['@docsvision/webclient/System/ExtensionManager', 'tslib', '@docsvision/w
                             "Создана: " + info.created + "\n" +
                             "Дата с: " + info.fromDate + "\n" +
                             "Дата по: " + info.toDate + "\n" +
+                            "Город: " + info.city + "\n" +
                             "Основание: " + info.reason;
                         return [4 /*yield*/, MessageBox.MessageBox.ShowInfo(text)];
                     case 1:
